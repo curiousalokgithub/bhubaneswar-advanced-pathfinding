@@ -48,12 +48,23 @@ This application provides intelligent route planning specifically designed for B
 
 ## 🏗️ **Technical Architecture**
 
+### **Full-Stack Implementation**
+- **Frontend**: React 18 with modern pathfinding algorithms
+- **Backend**: Node.js/Express API infrastructure (scalable for future features)
+- **Current Focus**: Frontend-driven pathfinding with backend ready for data persistence
+
 ### **Frontend Stack**
 - **React 18**: Modern component architecture with hooks
 - **Vite**: Fast development server and build tool
 - **TailwindCSS**: Utility-first styling framework
 - **React Router**: Client-side routing
 - **React Hot Toast**: User feedback notifications
+
+### **Backend Stack**
+- **Node.js & Express**: RESTful API server
+- **Database Models**: Ready for route/location data persistence
+- **Environment Configuration**: Production-ready setup
+- **Modular Architecture**: Controllers, routes, and models separation
 
 ### **Mapping & Geolocation**
 - **Leaflet**: Interactive map library
@@ -62,9 +73,9 @@ This application provides intelligent route planning specifically designed for B
 - **Custom Markers**: Category-specific visual indicators
 
 ### **Data Management**
-- **Structured Location Database**: 50+ locations with coordinates and metadata
-- **Transport Mode Definitions**: Speed, cost, and feature specifications
-- **Category Organization**: Hierarchical location grouping
+- **Frontend Data Layer**: Structured location database (50+ locations)
+- **Transport Definitions**: Speed, cost, and feature specifications
+- **Backend Ready**: API endpoints prepared for dynamic data management
 
 ## 🚀 **Getting Started**
 
@@ -82,8 +93,18 @@ cd bhubaneswar-pathfinding
 cd frontend
 npm install
 
-# Start development server
+# Install backend dependencies (for future scaling)
+cd ../backend
+npm install
+
+# Start development servers
+# Frontend (primary)
+cd ../frontend
 npm run dev
+
+# Backend (optional - for API development)
+cd ../backend
+npm start
 ```
 
 ### Usage
@@ -97,23 +118,30 @@ npm run dev
 
 ```
 bhubaneswar-pathfinding/
-├── frontend/
+├── frontend/                 # React Application
 │   ├── src/
-│   │   ├── components/
+│   │   ├── components/      # Reusable UI components
 │   │   │   ├── Header.jsx
 │   │   │   ├── InteractiveMap.jsx
 │   │   │   └── MapFallback.jsx
-│   │   ├── pages/
+│   │   ├── pages/           # Application pages
 │   │   │   ├── HomePage.jsx
 │   │   │   ├── SearchPage.jsx
 │   │   │   ├── EnhancedSearchPage.jsx
 │   │   │   └── SpecialJourneysPageNew.jsx
-│   │   ├── data/
+│   │   ├── data/            # Static data management
 │   │   │   └── locations.js
-│   │   ├── services/
+│   │   ├── services/        # Business logic
 │   │   │   └── pathfinding.js
-│   │   └── utils/
-│   ├── public/
+│   │   └── utils/           # Helper functions
+│   ├── public/              # Static assets
+│   └── package.json
+├── backend/                 # Node.js API Server
+│   ├── controllers/         # Route handlers
+│   ├── models/              # Data models
+│   ├── routes/              # API endpoints
+│   ├── scripts/             # Database scripts
+│   ├── server.js            # Express server
 │   └── package.json
 ├── README.md
 └── .gitignore
