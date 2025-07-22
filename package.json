@@ -1,0 +1,33 @@
+{
+  "name": "bhubaneswar-advanced-pathfinding",
+  "version": "1.0.0",
+  "description": "A comprehensive route planning application for Bhubaneswar with advanced pathfinding algorithms, current location detection, and multi-modal transport integration.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "install-deps": "cd frontend && npm install",
+    "preview": "cd frontend && npm run preview"
+  },
+  "keywords": [
+    "pathfinding",
+    "route-planning",
+    "bhubaneswar",
+    "react",
+    "leaflet",
+    "geolocation",
+    "navigation",
+    "transport",
+    "maps"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/bhubaneswar-pathfinding.git"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
