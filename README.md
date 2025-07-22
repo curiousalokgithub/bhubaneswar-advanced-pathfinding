@@ -1,434 +1,239 @@
-# Bhubaneswar Advanced Pathfinder & Route Planner
+# 🗺️ Bhubaneswar Advanced Pathfinding System
 
-An intelligent pathfinding application that helps residents and visitors discover optimal routes and curated journeys in Bhubaneswar, Odisha. This project showcases advanced algorithms, interactive mapping, and specialized journey planning.
+> **A comprehensive route planning application for Bhubaneswar with advanced pathfinding algorithms, current location detection, and multi-modal transport integration.**
 
-## 🗺️ Project Overview
+![React](https://img.shields.io/badge/React-18.0+-blue.svg)
+![Vite](https://img.shields.io/badge/Vite-5.0+-green.svg)
+![Leaflet](https://img.shields.io/badge/Leaflet-Interactive%20Maps-brightgreen.svg)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-Styling-blueviolet.svg)
 
-This application provides advanced route planning and pathfinding capabilities for Bhubaneswar, featuring:
-- **Advanced Pathfinding Algorithms**: Custom implementations of Dijkstra and A* algorithms
-- **Interactive Maps**: Real-time route visualization using Leaflet maps
-- **Special Journey Types**: 5 curated journey experiences for different interests
-- **Smart Route Optimization**: Multi-criteria optimization for distance, time, and preferences
-- **Cultural Integration**: Local context and heritage-focused routing
-- **Mobile Responsive**: Fully optimized for all devices
+## 🌟 **Project Overview**
 
-## 🚀 Key Features
+This application provides intelligent route planning specifically designed for Bhubaneswar, Odisha. It combines advanced pathfinding algorithms with real-world local knowledge to deliver optimal routing solutions that go beyond standard navigation apps.
 
-### Advanced Pathfinding
-- 🧠 **Custom Algorithms** - Dijkstra and A* pathfinding implementations
-- 🎯 **Multi-Criteria Optimization** - Route quality based on distance, time, and user preferences
-- 🔄 **Algorithm Comparison** - See which algorithm was used for each route
-- ⚡ **Real-time Calculation** - Instant route generation with visual feedback
-- 🎛️ **Transport Modes** - Walking, driving, and public transport optimization
+### 🎯 **Key Differentiators from Google Maps**
 
-### Interactive Mapping
-- �️ **Live Interactive Maps** - Leaflet-powered real-time map visualization
-- 📍 **Custom Markers** - Color-coded markers for different location types
-- 🛣️ **Route Visualization** - Polyline routes with journey-specific styling
-- 🔍 **Zoom & Pan** - Full map interaction with auto-fitting bounds
-- 💡 **Smart Popups** - Detailed location information on marker click
-### Special Journey Experiences
-- �️ **Temple Heritage Trail** - Chronologically optimized temple visits with cultural insights
-- 🎓 **Student Life Circuit** - Budget-friendly routes connecting educational and social hubs
-- 🍛 **Culinary Adventure** - Meal-timed food routes with local cuisine optimization
-- � **Romantic Evening Route** - Sunset-optimized romantic locations with ambiance
-- 💼 **Business Circuit** - Professional routes with parking and meeting facility info
+- **Local Intelligence**: Specialized for Bhubaneswar with local transport costs and routes
+- **Educational Focus**: Comprehensive university and college routing
+- **Category-Based Search**: Filter destinations by purpose (healthcare, education, shopping, etc.)
+- **Multi-Modal Comparison**: Compare costs and features across all transport modes
+- **Current Location Integration**: One-click geolocation with visual indicators
+- **Cultural Awareness**: Includes temples, heritage sites, and cultural landmarks
 
-### User Experience
-- 📱 **Fully Responsive** - Mobile-first design adapting to all screen sizes
-- ⚡ **Real-time Journey Generation** - Interactive journey creation with loading states
-- 🎨 **Beautiful UI/UX** - Modern design with smooth animations and transitions
-- � **Smart Notifications** - Toast notifications for user actions and feedback
-- 🎛️ **Preference-Based** - Customizable routes based on user priorities
-- 🌐 **Accessibility** - ARIA-compliant components for inclusive design
+## ✨ **Features**
 
-### Technical Excellence
-- 🔬 **Algorithm Showcase** - Visible pathfinding algorithm selection and performance
-- 🎯 **Route Quality Metrics** - Optimal, Good, or Standard route classifications
-- ⚙️ **Fallback Systems** - Graceful degradation when services aren't available
-- 📊 **Performance Optimized** - Lazy loading, code splitting, and efficient rendering
+### 📍 **Advanced Location Services**
+- **Current Location Detection**: GPS-based location with visual pulse animation
+- **50+ Categorized Locations**: Organized by landmarks, education, healthcare, transport, shopping
+- **Smart Suggestions**: Context-aware location recommendations
+- **Interactive Filtering**: Category-based location discovery
 
-## 🛠️ Technology Stack
+### 🚗 **Multi-Modal Transportation**
+- **6 Transport Modes**: Walking, Cycling, Auto Rickshaw, Bus, Car, Motorcycle
+- **Real-Time Cost Calculation**: Distance-based pricing for each mode
+- **Speed Optimization**: Mode-specific speed considerations
+- **Feature Comparison**: Comfort, eco-friendliness, convenience factors
 
-### Frontend
-- **React.js 18** - Modern React with hooks and functional components
-- **Vite** - Lightning-fast build tool and development server
-- **Tailwind CSS** - Utility-first CSS framework for responsive design
-- **React Router 6** - Client-side routing and navigation
-- **Leaflet + React-Leaflet** - Interactive maps with custom markers and routes
-- **React Hot Toast** - Beautiful toast notifications
-- **React Icons** - Comprehensive icon library
+### 🗺️ **Interactive Mapping**
+- **Leaflet Integration**: Professional mapping with custom markers
+- **Visual Route Indicators**: Dotted lines connecting origin and destination
+- **Marker Customization**: Color-coded categories with pulse animations
+- **Responsive Design**: Mobile-optimized touch interface
 
-### Algorithms & Services
-- **Custom Pathfinding Service** - Dijkstra and A* algorithm implementations
-- **Graph Theory** - Location graph with weighted edges for optimal routing
-- **Multi-Criteria Decision Making** - Route optimization based on multiple factors
-- **Traveling Salesman Problem (TSP)** - Multi-stop journey optimization
-- **Heuristic Functions** - A* heuristics for faster pathfinding
+### 🧠 **Smart Algorithms**
+- **Pathfinding Implementation**: Custom Dijkstra and A* algorithms
+- **Multi-Criteria Optimization**: Distance, time, cost, and comfort factors
+- **Route Quality Assessment**: Optimal/Good/Fair route classifications
+- **Step-by-Step Directions**: Detailed navigation instructions
 
-### Development Tools
-- **ESLint** - Code linting and style enforcement
-- **PostCSS** - CSS processing and optimization
-- **Autoprefixer** - Automatic CSS vendor prefixing
-- **Vite Plugin React** - Hot module replacement for React
+## 🏗️ **Technical Architecture**
 
-## 📁 Project Structure
+### **Full-Stack Implementation**
+- **Frontend**: React 18 with modern pathfinding algorithms
+- **Backend**: Node.js/Express API infrastructure (scalable for future features)
+- **Current Focus**: Frontend-driven pathfinding with backend ready for data persistence
 
-```
-Bhubaneswar-Advanced-Pathfinder/
-├── frontend/
-│   ├── src/
-│   │   ├── components/          # Reusable UI components
-│   │   │   ├── InteractiveMap.jsx     # Leaflet map integration
-│   │   │   ├── MapFallback.jsx        # Fallback for map errors
-│   │   │   └── Header.jsx             # Navigation header
-│   │   ├── pages/               # Main application pages
-│   │   │   ├── HomePage.jsx           # Landing page with features
-│   │   │   ├── SearchPage.jsx         # Route planning interface
-│   │   │   ├── SpecialJourneysPage.jsx # Curated journey experiences
-│   │   │   └── AboutPage.jsx          # Project information
-│   │   ├── services/            # Business logic and algorithms
-│   │   │   └── pathfinding.js         # Custom pathfinding algorithms
-│   │   ├── App.jsx              # Main app component with routing
-│   │   ├── main.jsx             # Application entry point
-│   │   └── index.css            # Global styles with Tailwind
-│   ├── public/                  # Static assets
-│   ├── package.json             # Dependencies and scripts
-│   ├── tailwind.config.js       # Tailwind configuration
-│   └── vite.config.js          # Vite build configuration
-└── README.md                    # Project documentation
-```
+### **Frontend Stack**
+- **React 18**: Modern component architecture with hooks
+- **Vite**: Fast development server and build tool
+- **TailwindCSS**: Utility-first styling framework
+- **React Router**: Client-side routing
+- **React Hot Toast**: User feedback notifications
 
-## 🚦 Getting Started
+### **Backend Stack**
+- **Node.js & Express**: RESTful API server
+- **Database Models**: Ready for route/location data persistence
+- **Environment Configuration**: Production-ready setup
+- **Modular Architecture**: Controllers, routes, and models separation
+
+### **Mapping & Geolocation**
+- **Leaflet**: Interactive map library
+- **React-Leaflet**: React bindings for Leaflet
+- **Browser Geolocation API**: Current location detection
+- **Custom Markers**: Category-specific visual indicators
+
+### **Data Management**
+- **Frontend Data Layer**: Structured location database (50+ locations)
+- **Transport Definitions**: Speed, cost, and feature specifications
+- **Backend Ready**: API endpoints prepared for dynamic data management
+
+## 🚀 **Getting Started**
 
 ### Prerequisites
-- **Node.js** (v18 or higher) - JavaScript runtime
-- **npm** or **yarn** - Package manager
-- **Git** - Version control
-- **Modern Web Browser** - Chrome, Firefox, Safari, or Edge
+- Node.js 18+ and npm
+- Modern browser with geolocation support
 
 ### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/bhubaneswar-advanced-pathfinder.git
-   cd bhubaneswar-advanced-pathfinder
-   ```
-
-2. **Frontend Setup**
-   ```bash
-   cd frontend
-   npm install
-   ```
-
-3. **Start Development Server**
-   ```bash
-   npm run dev
-   ```
-
-4. **Open in Browser**
-   ```
-   Navigate to: http://localhost:3000
-   ```
-
-### Development Commands
-
 ```bash
-# Start development server with hot reload
+# Clone the repository
+git clone https://github.com/YOUR_USERNAME/bhubaneswar-pathfinding.git
+cd bhubaneswar-pathfinding
+
+# Install frontend dependencies
+cd frontend
+npm install
+
+# Install backend dependencies (for future scaling)
+cd ../backend
+npm install
+
+# Start development servers
+# Frontend (primary)
+cd ../frontend
 npm run dev
 
-# Build for production
-npm run build
-
-# Preview production build locally
-npm run preview
-
-# Run ESLint for code quality
-npm run lint
+# Backend (optional - for API development)
+cd ../backend
+npm start
 ```
 
-## � Algorithm Implementation
+### Usage
+1. Navigate to `http://localhost:5173`
+2. Go to "Advanced Search" in the navigation
+3. Click "Use Current Location" or manually enter starting point
+4. Select destination from categorized suggestions
+5. Choose transport mode and calculate optimal route
 
-### Pathfinding Algorithms
-The application features custom implementations of classical pathfinding algorithms:
+## 📊 **Project Structure**
 
-#### **Dijkstra's Algorithm**
-- **Purpose**: Finds shortest path by distance
-- **Implementation**: Priority queue with edge relaxation
-- **Use Case**: When absolute shortest distance is required
-- **Time Complexity**: O((V + E) log V)
-
-#### **A* Algorithm** 
-- **Purpose**: Heuristic-based pathfinding for faster results
-- **Implementation**: Dijkstra + Manhattan distance heuristic
-- **Use Case**: When speed is important with good path quality
-- **Time Complexity**: O(b^d) where b is branching factor
-
-#### **Multi-Stop Optimization**
-- **TSP Approximation**: Traveling Salesman Problem solver
-- **Greedy Approach**: Nearest neighbor with local optimization
-- **Use Case**: Optimizing routes with multiple destinations
-
-### Route Quality Metrics
-- **Optimal**: Direct path with minimal stops (≤3 locations)
-- **Good**: Efficient path with few intermediate stops
-- **Standard**: Fallback routes when optimal paths unavailable
-
-## 🏛️ Special Journey Types
-
-### 1. 🕉️ Temple Heritage Trail
-- **Focus**: Ancient temples in chronological order
-- **Algorithm**: Optimized for cultural significance and accessibility
-- **Features**: Historical context, photography spots, priest contacts
-- **Locations**: Lingaraj Temple, Rajarani Temple, Mukteshvara Temple, Parasurameswara Temple
-- **Duration**: 4-6 hours | **Cost**: ₹200-300
-
-### 2. 🎓 Student Life Circuit  
-- **Focus**: Budget-friendly educational and social hubs
-- **Algorithm**: Cost optimization with preference for student discounts
-- **Features**: Study spots, Wi-Fi availability, affordable dining
-- **Locations**: KIIT University, Utkal University, libraries, student cafes
-- **Duration**: 3-4 hours | **Cost**: ₹100-150
-
-### 3. 🍛 Culinary Adventure
-- **Focus**: Meal-timed food experiences
-- **Algorithm**: Time-based optimization for breakfast, lunch, dinner
-- **Features**: Local cuisine, dietary preferences, food safety ratings
-- **Locations**: Traditional restaurants, street food, fine dining
-- **Duration**: 6-8 hours | **Cost**: ₹500-800
-
-### 4. 💕 Romantic Evening Route
-- **Focus**: Sunset-timed romantic locations
-- **Algorithm**: Ambiance and timing optimization
-- **Features**: Sunset views, photography spots, couple-friendly venues
-- **Locations**: Scenic viewpoints, gardens, romantic restaurants
-- **Duration**: 4-5 hours | **Cost**: ₹800-1200
-
-### 5. 💼 Business Circuit
-- **Focus**: Professional meetings and networking
-- **Algorithm**: Efficiency with parking and facility considerations  
-- **Features**: Meeting rooms, parking info, business centers
-- **Locations**: IT parks, conference centers, professional venues
-- **Duration**: 2-3 hours | **Cost**: ₹300-500
-
-## 🗺️ Interactive Mapping Features
-
-### Real-time Visualization
-- **Leaflet Integration**: Professional-grade mapping with OpenStreetMap data
-- **Custom Markers**: Color-coded markers for different journey types
-- **Route Polylines**: Visual path representation with journey-specific styling
-- **Auto-fitting Bounds**: Map automatically adjusts to show all relevant locations
-- **Interactive Popups**: Detailed location information with coordinates
-
-### Location Database
-The application includes comprehensive data for Bhubaneswar:
-
-#### **Major Landmarks**
-- 🏛️ **Religious**: Lingaraj Temple, Rajarani Temple, Mukteshvara Temple
-- � **Educational**: KIIT University, Utkal University, Regional Science Centre  
-- 🏥 **Healthcare**: AIIMS Bhubaneswar, Apollo Hospitals
-- 🛍️ **Commercial**: Esplanade One Mall, DN Regalia Mall
-- 🏛️ **Cultural**: Tribal Museum, Ekamra Haat, Khandagiri Caves
-- 🌿 **Historical**: Dhauli Peace Pagoda, ancient cave complexes
-
-#### **Transportation Hubs**
-- 🚂 **Railway**: Bhubaneswar Railway Station, New Bhubaneswar Station
-- 🛫 **Airport**: Biju Patnaik International Airport
-- 🚌 **Bus Terminals**: Master Canteen Bus Stand, Baramunda Bus Terminal
-
-## 💻 Development Highlights
-
-### Code Quality & Architecture
-- **Modern React Patterns**: Hooks, functional components, custom hooks
-- **Component Reusability**: Modular design with shared components
-- **State Management**: Efficient local state with React hooks
-- **Error Handling**: Graceful fallbacks and user-friendly error messages
-- **Performance**: Lazy loading, code splitting, optimized re-renders
-
-### Responsive Design
-- **Mobile-First**: Designed for mobile with progressive enhancement
-- **Breakpoint System**: sm (640px), md (768px), lg (1024px), xl (1280px)
-- **Touch-Friendly**: Optimized touch targets and gestures
-- **Cross-Browser**: Compatible with all modern browsers
-
-### Accessibility
-- **ARIA Labels**: Screen reader support for interactive elements
-- **Keyboard Navigation**: Full keyboard accessibility
-- **Color Contrast**: WCAG 2.1 compliant color schemes
-- **Focus Management**: Proper focus handling for modals and navigation
-
-## 📱 User Experience Features
-
-### Interactive Journey Selection
-- **Visual Journey Cards**: Beautiful, responsive cards for each journey type
-- **Real-time Generation**: Live journey creation with progress indicators  
-- **Modal Interfaces**: Full-screen journey details with interactive maps
-- **Customization Options**: Preference-based route modifications
-- **Toast Notifications**: Immediate feedback for all user actions
-
-### Route Planning Interface  
-- **Dual Input System**: From/To location inputs with swap functionality
-- **Transport Mode Selection**: Walking, driving, public transport options
-- **Route Preferences**: Fastest, shortest, or scenic route options
-- **Popular Destinations**: Quick-select from common locations
-- **Route Quality Indicators**: Visual feedback on route optimality
-
-### Mobile Optimization
-- **Responsive Grid**: Adaptive layouts for all screen sizes
-- **Touch Gestures**: Native mobile interactions and gestures
-- **Fast Loading**: Optimized assets and lazy loading
-- **Offline Fallbacks**: Graceful handling of network issues
-
-## 🎨 Design System & Branding
-
-### Color Palette
-- **Primary Blue**: #3B82F6 (Interactive elements, primary actions)
-- **Journey Colors**: Orange (Heritage), Green (Student), Red (Food), Pink (Romantic), Indigo (Business)
-- **Neutral Grays**: #F9FAFB (Background), #374151 (Text), #6B7280 (Secondary text)
-- **Status Colors**: Green (Success), Red (Error), Yellow (Warning), Blue (Info)
-
-### Typography & Layout
-- **Font Family**: Inter - Modern, highly legible system font
-- **Hierarchy**: Clear heading levels with appropriate sizing and spacing
-- **Components**: Reusable button, card, form, and navigation components
-- **Grid System**: Tailwind's responsive grid with consistent spacing
-- **Icons**: React Icons library with consistent sizing and styling
-
-## 🚀 Deployment & Production
-
-### Frontend Deployment Options
-
-#### **Vercel (Recommended)**
-```bash
-# Install Vercel CLI
-npm install -g vercel
-
-# Deploy to Vercel
-cd frontend
-npm run build
-vercel --prod
+```
+bhubaneswar-pathfinding/
+├── frontend/                 # React Application
+│   ├── src/
+│   │   ├── components/      # Reusable UI components
+│   │   │   ├── Header.jsx
+│   │   │   ├── InteractiveMap.jsx
+│   │   │   └── MapFallback.jsx
+│   │   ├── pages/           # Application pages
+│   │   │   ├── HomePage.jsx
+│   │   │   ├── SearchPage.jsx
+│   │   │   ├── EnhancedSearchPage.jsx
+│   │   │   └── SpecialJourneysPageNew.jsx
+│   │   ├── data/            # Static data management
+│   │   │   └── locations.js
+│   │   ├── services/        # Business logic
+│   │   │   └── pathfinding.js
+│   │   └── utils/           # Helper functions
+│   ├── public/              # Static assets
+│   └── package.json
+├── backend/                 # Node.js API Server
+│   ├── controllers/         # Route handlers
+│   ├── models/              # Data models
+│   ├── routes/              # API endpoints
+│   ├── scripts/             # Database scripts
+│   ├── server.js            # Express server
+│   └── package.json
+├── README.md
+└── .gitignore
 ```
 
-#### **Netlify**
-```bash
-# Build the project
-npm run build
+## 🎯 **Key Components**
 
-# Deploy dist folder to Netlify
-# Or connect your GitHub repository for automatic deployments
-```
+### **EnhancedSearchPage.jsx**
+- Main search interface with current location detection
+- Category-based filtering system
+- Transport mode selection with cost calculations
+- Real-time route planning and visualization
 
-#### **GitHub Pages**
-```bash
-# Install gh-pages
-npm install --save-dev gh-pages
+### **InteractiveMap.jsx**
+- Leaflet map integration with custom markers
+- Support for current location with pulse animation
+- Route visualization with dotted lines
+- Responsive design with fallback component
 
-# Add to package.json scripts:
-# "deploy": "gh-pages -d dist"
+### **locations.js**
+- Comprehensive database of 50+ Bhubaneswar locations
+- Categorized by landmarks, education, healthcare, transport, shopping
+- Transport mode definitions with speeds and features
+- Coordinates and metadata for each location
 
-# Deploy
-npm run build
-npm run deploy
-```
+### **pathfinding.js**
+- Implementation of Dijkstra and A* algorithms
+- Multi-criteria route optimization
+- Route quality assessment
+- Performance-optimized graph traversal
 
-### Environment Configuration
-- **Development**: `http://localhost:3000`
-- **Production**: Configure your domain and analytics
-- **CDN**: Static assets served via CDN for optimal performance
+## 🎨 **Visual Features**
 
-## 🎯 Competitive Advantages
+### Location Categories & Colors
+- 🏛️ **Landmarks**: Orange markers for temples and monuments
+- 🎓 **Educational**: Green markers for schools and universities
+- 🏥 **Healthcare**: Red markers for hospitals and clinics
+- 🚌 **Public Transport**: Blue markers for transport hubs
+- 🛍️ **Shopping**: Pink markers for malls and markets
 
-### vs. Google Maps
-- **Local Cultural Context**: Deep knowledge of Bhubaneswar's heritage and culture
-- **Specialized Journeys**: Curated experiences not available in generic mapping services  
-- **Algorithm Transparency**: Users can see which pathfinding algorithm was used
-- **Educational Value**: Learn about temples, history, and local significance
-- **Community Focus**: Routes optimized for local preferences and behaviors
+### Interactive Elements
+- **Current Location**: Blue pulsing animation
+- **Route Visualization**: Dotted connecting lines
+- **Touch-Friendly**: Mobile-optimized controls
+- **Responsive Grid**: Adaptive layout for all screens
 
-### vs. Other Route Planners
-- **Custom Algorithms**: Showcases computer science and algorithm implementation skills
-- **Interactive Visualization**: Real-time route generation with visual feedback
-- **Multi-Criteria Optimization**: Beyond just distance/time to include preferences
-- **Cultural Integration**: Routes that consider local festivals, timing, and customs
-- **Portfolio Showcase**: Demonstrates full-stack development capabilities
+## 📈 **Performance & Optimization**
 
-## 🏆 Project Achievements
+- **Code Splitting**: Lazy loading for map components
+- **Memoization**: Optimized React re-renders
+- **Debounced Search**: Efficient location filtering
+- **Fallback Systems**: Graceful degradation for map failures
+- **Mobile Optimization**: Touch-friendly interface design
 
-### Technical Excellence
-- ✅ **Algorithm Implementation**: Custom Dijkstra and A* pathfinding
-- ✅ **Interactive Mapping**: Real-time Leaflet integration with custom markers
-- ✅ **Responsive Design**: Mobile-first approach with perfect adaptability
-- ✅ **Performance Optimization**: Lazy loading, code splitting, efficient rendering
-- ✅ **Error Handling**: Graceful fallbacks and user-friendly error management
+## 🌍 **Future Enhancements**
 
-### User Experience
-- ✅ **Intuitive Interface**: Clean, modern design with smooth interactions
-- ✅ **Accessibility**: WCAG 2.1 compliant with full keyboard navigation
-- ✅ **Cultural Relevance**: Locally meaningful routes and recommendations
-- ✅ **Educational Value**: Learning opportunities about local heritage
-- ✅ **Customization**: User preferences integrated into routing decisions
+- **Real-Time Traffic**: Integration with traffic APIs
+- **Public Transport Schedules**: Live bus/train timings
+- **Crowd-Sourced Data**: User-contributed location updates
+- **Offline Capabilities**: PWA with offline map caching
+- **Route History**: Save and revisit previous routes
+- **Social Features**: Share routes and recommendations
 
-## 📄 License
+## 🤝 **Contributing**
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+This project is designed for educational and portfolio purposes. If you'd like to contribute:
 
-### MIT License Summary
-- ✅ **Commercial Use**: Can be used for commercial projects
-- ✅ **Modification**: Can be modified and adapted
-- ✅ **Distribution**: Can be distributed and shared
-- ✅ **Private Use**: Can be used privately
-- ❓ **Attribution**: Must include original copyright notice
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## 👨‍💻 Author & Contact
+## 📧 **Contact**
 
-**Harshit Singh**
-- 🐙 **GitHub**: [@harshitsingh4321](https://github.com/harshitsingh4321)
-- 💼 **LinkedIn**: Connect for collaboration opportunities
-- 📧 **Email**: Available for project discussions and opportunities
-- 🌐 **Portfolio**: Showcasing full-stack development skills
+**Project Creator**: [Your Name]  
+**Portfolio**: [Your Portfolio URL]  
+**LinkedIn**: [Your LinkedIn Profile]  
+**Email**: [Your Email]
 
-### Project Stats
-- 🏗️ **Built with**: React.js, Tailwind CSS, Leaflet, Advanced Algorithms
-- ⏱️ **Development Time**: Iterative development with continuous improvements
-- 🎯 **Purpose**: Portfolio project demonstrating advanced web development skills
-- 🌟 **Highlights**: Custom algorithms, interactive mapping, cultural integration
+## 📄 **License**
 
-## 🙏 Acknowledgments
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-- 🏛️ **Bhubaneswar Municipal Corporation** - For location data inspiration and cultural insights
-- 🗺️ **OpenStreetMap Contributors** - For providing the mapping data foundation
-- ⚛️ **React Community** - For the incredible ecosystem and learning resources
-- 🍃 **Leaflet Team** - For the powerful, open-source mapping library
-- 🎨 **Tailwind CSS** - For the utility-first CSS framework
-- 🏛️ **Odisha Tourism** - For cultural and historical information
-- 🎓 **Computer Science Education** - For algorithm knowledge and implementation guidance
-- 🌟 **Open Source Community** - For inspiration, tools, and collaborative spirit
+## 🙏 **Acknowledgments**
+
+- **Leaflet**: For excellent mapping capabilities
+- **React Team**: For the amazing framework
+- **TailwindCSS**: For utility-first CSS framework
+- **Bhubaneswar Tourism**: For location inspiration and data
+- **OpenStreetMap**: For map tile services
 
 ---
 
-## 📋 Project Summary
-
-**Bhubaneswar Advanced Pathfinder** is a sophisticated web application that demonstrates:
-
-### 🎯 **Core Value Proposition**
-A specialized pathfinding solution for Bhubaneswar that combines advanced computer science algorithms with local cultural knowledge to provide unique routing experiences not available in generic mapping services.
-
-### 🛠️ **Technical Skills Demonstrated**
-- **Algorithm Implementation**: Custom Dijkstra and A* pathfinding algorithms
-- **Frontend Development**: Modern React.js with hooks, responsive design, and interactive UI
-- **Mapping Integration**: Leaflet maps with custom markers, routes, and real-time visualization  
-- **User Experience Design**: Intuitive interfaces, smooth animations, and accessibility compliance
-- **Code Architecture**: Modular, maintainable code with proper error handling and fallback systems
-
-### 🌟 **Unique Differentiators**
-- **Cultural Integration**: Routes that consider local heritage, festivals, and cultural significance
-- **Algorithm Transparency**: Users can see which pathfinding algorithm was used for their route
-- **Specialized Journeys**: 5 curated journey types (Heritage, Student, Culinary, Romantic, Business)
-- **Educational Value**: Learn about Bhubaneswar's history and culture while planning routes
-- **Local Optimization**: Routes optimized for local conditions, preferences, and behaviors
-
-This project showcases full-stack development capabilities, algorithm implementation skills, and the ability to create culturally relevant, user-focused applications that solve real-world problems in innovative ways.
-
----
-
-**🚀 Ready to explore Bhubaneswar like never before!**
+**⭐ If this project helped you in your learning journey, please give it a star!**
