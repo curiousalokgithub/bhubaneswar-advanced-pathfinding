@@ -5,6 +5,7 @@ import Header from './components/Header'
 import HomePage from './pages/HomePage'
 import SearchPage from './pages/SearchPage'
 import EnhancedSearchPage from './pages/EnhancedSearchPage'
+import EnhancedSearchPageBackend from './pages/EnhancedSearchPageBackend'
 import CategoryPage from './pages/CategoryPage'
 import StorePage from './pages/StorePage'
 import AboutPage from './pages/AboutPage'
@@ -21,6 +22,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/enhanced-search" element={<EnhancedSearchPage />} />
+            <Route path="/real-time-search" element={<EnhancedSearchPageBackend />} />
             <Route path="/category/:slug" element={<CategoryPage />} />
             <Route path="/store/:id" element={<StorePage />} />
             <Route path="/about" element={<AboutPage />} />

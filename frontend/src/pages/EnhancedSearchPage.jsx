@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { FaMapMarkerAlt, FaRoute, FaExchangeAlt, FaClock, FaWalking, FaCar, FaBus, FaLocationArrow, FaSearch, FaTimes } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaRoute, FaExchangeAlt, FaClock, FaWalking, FaCar, FaBus, FaLocationArrow, FaSearch, FaTimes, FaSpinner } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
 import InteractiveMap from '../components/InteractiveMap';
-import { locationCategories, transportModes } from '../data/locations';
+import pathfindingAPI, { RouteUtils } from '../services/pathfindingAPI';
 
 const EnhancedSearchPage = () => {
   const [fromLocation, setFromLocation] = useState('');
@@ -18,6 +18,10 @@ const EnhancedSearchPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [isDetectingLocation, setIsDetectingLocation] = useState(false);
+  const [locations, setLocations] = useState([]);
+  const [transportModes, setTransportModes] = useState([]);
+  const [apiStatus, setApiStatus] = useState('checking');
+  const [allPricing, setAllPricing] = useState(null);
 
   // Get current location
   const getCurrentLocation = () => {
@@ -63,15 +67,88 @@ const EnhancedSearchPage = () => {
     );
   };
 
+  // Load locations and check API status on component mount
+  useEffect(() => {
+    const initializeApp = async () => {
+      loadTransportModes();
+      await checkAPIStatus();
+      setTimeout(() => loadLocations(), 500);
+    };
+    
+    initializeApp();
+  }, []);
+
+  const checkAPIStatus = async () => {
+    try {
+      const health = await pathfindingAPI.checkHealth();
+      if (health && health.status === 'OK') {
+        setApiStatus('connected');
+        toast.success('✅ Backend connected successfully!');
+      } else {
+        setApiStatus('error');
+        toast.error('Backend server not available. Using demo mode.');
+      }
+    } catch (error) {
+      console.error('API health check failed:', error);
+      setApiStatus('error');
+      toast.error('Backend server not available. Using demo mode.');
+    }
+  };
+
+  const loadLocations = async () => {
+    try {
+      if (apiStatus === 'connected') {
+        const data = await pathfindingAPI.getLocations();
+        let flattenedLocations = [];
+        if (data && data.categories) {
+          Object.keys(data.categories).forEach(categoryKey => {
+            const category = data.categories[categoryKey];
+            if (category && category.locations) {
+              const categoryLocations = category.locations.map(loc => ({
+                ...loc,
+                category: categoryKey,
+                categoryName: category.name
+              }));
+              flattenedLocations = [...flattenedLocations, ...categoryLocations];
+            }
+          });
+        }
+        setLocations(flattenedLocations);
+        console.log('✅ Loaded locations from backend:', flattenedLocations.length);
+      } else {
+        loadFallbackData();
+      }
+    } catch (error) {
+      console.error('❌ Failed to load locations:', error);
+      loadFallbackData();
+    }
+  };
+
+  const loadFallbackData = () => {
+    const fallbackLocations = [
+      { id: 1, name: 'Lingaraj Temple', coords: [20.2372, 85.8344], category: 'landmarks', type: 'Religious' },
+      { id: 2, name: 'KIIT University', coords: [20.3558, 85.8166], category: 'educational', type: 'University' },
+      { id: 3, name: 'AIIMS Bhubaneswar', coords: [20.1847, 85.8064], category: 'healthcare', type: 'Hospital' },
+      { id: 4, name: 'Bhubaneswar Railway Station', coords: [20.2647, 85.8341], category: 'publicTransport', type: 'Railway Station' },
+      { id: 5, name: 'Esplanade One Mall', coords: [20.2961, 85.8245], category: 'shopping', type: 'Mall' }
+    ];
+    setLocations(fallbackLocations);
+  };
+
+  const loadTransportModes = () => {
+    setTransportModes([
+      { id: 'walking', name: 'Walking', icon: '🚶', color: 'green' },
+      { id: 'cycling', name: 'Cycling', icon: '🚴', color: 'blue' },
+      { id: 'auto', name: 'Auto', icon: '🛺', color: 'yellow' },
+      { id: 'bus', name: 'Bus', icon: '🚌', color: 'red' },
+      { id: 'car', name: 'Car', icon: '🚗', color: 'gray' },
+      { id: 'bike', name: 'Bike', icon: '🏍️', color: 'purple' }
+    ]);
+  };
+
   // Get all locations for suggestions
   const getAllLocations = () => {
-    let allLocations = [];
-    
-    Object.values(locationCategories).forEach(category => {
-      allLocations = [...allLocations, ...category.locations];
-    });
-    
-    return allLocations;
+    return locations;
   };
 
   // Filter locations based on search query and category
