@@ -1,5 +1,7 @@
 // Enhanced API service for backend integration
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.PROD 
+  ? '/api'  // Use relative path in production (Vercel will handle routing)
+  : 'http://localhost:5000/api';  // Use localhost in development
 
 class PathfindingAPI {
   constructor() {
