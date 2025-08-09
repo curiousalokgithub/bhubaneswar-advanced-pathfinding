@@ -15,16 +15,14 @@
     "VITE_DEFAULT_LNG": "85.8245",
     "VITE_DEFAULT_ZOOM": "13"
   },
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "https://bhubaneswar-pathfinding-api.onrender.com/api/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/api/(.*)",
+      "destination": "https://bhubaneswar-pathfinding-api.onrender.com/api/$1"
     }
   ],
+  "cleanUrls": true,
+  "trailingSlash": false,
   "headers": [
     {
       "source": "/(.*)",
