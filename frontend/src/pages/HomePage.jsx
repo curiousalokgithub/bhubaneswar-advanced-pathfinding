@@ -1,95 +1,125 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { FaSearch, FaMapMarkerAlt, FaStar, FaStore, FaRoute } from 'react-icons/fa';
+import { FaSearch, FaMapMarkerAlt, FaStar, FaRoute, FaUsers, FaArrowRight, FaPlay } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
-import { categoryAPI, storeAPI } from '../services/api';
+import { motion, AnimatePresence } from 'framer-motion';
+import { locationsAPI } from '../services/api';
+import { MotionWrapper, AnimatedCard, StaggeredContainer, FloatingElement } from '../components/motion/MotionWrapper';
+import { useGsapHeroTimeline, useGsapCardHover } from '../components/motion/gsapHooks';
 
 const HomePage = () => {
   const [categories, setCategories] = useState([]);
-  const [featuredStores, setFeaturedStores] = useState([]);
-  const [stats, setStats] = useState({ totalStores: 0, totalCategories: 0 });
+  const [featuredLocations, setFeaturedLocations] = useState([]);
+  const [stats, setStats] = useState({ totalLocations: 0, totalCategories: 0, totalRoutes: 0 });
   const [loading, setLoading] = useState(true);
+  
+  // Animation refs
+  const heroRef = useRef(null);
+  const cardRefs = useRef([]);
+  
+  // GSAP animations
+  useGsapHeroTimeline(heroRef);
+  useGsapCardHover(cardRefs);
 
   useEffect(() => {
-    // Set dummy data for now since we're converting to pathfinder
-    setLoading(true);
-    setTimeout(() => {
-      // Mock data for demonstration
-      setCategories([
-        {
-          _id: '1',
-          name: 'Public Transport',
-          slug: 'public-transport',
-          description: 'Bus stops, railway stations, and transit points',
-          icon: '🚌',
-          color: '#3B82F6',
-          storeCount: 25
-        },
-        {
-          _id: '2',
-          name: 'Landmarks',
-          slug: 'landmarks',
-          description: 'Famous places and tourist attractions',
-          icon: '🏛️',
-          color: '#EF4444',
-          storeCount: 15
-        },
-        {
-          _id: '3',
-          name: 'Educational',
-          slug: 'educational',
-          description: 'Schools, colleges, and universities',
-          icon: '🎓',
-          color: '#10B981',
-          storeCount: 30
-        },
-        {
-          _id: '4',
-          name: 'Healthcare',
-          slug: 'healthcare',
-          description: 'Hospitals and medical centers',
-          icon: '🏥',
-          color: '#F59E0B',
-          storeCount: 20
-        }
-      ]);
-      
-      setFeaturedStores([
-        {
-          _id: '1',
-          name: 'Bhubaneswar Railway Station',
-          description: 'Main railway station connecting to all major cities',
-          category: { name: 'Transport', color: '#3B82F6' },
-          address: { area: 'Master Canteen', city: 'Bhubaneswar' },
-          rating: 4.2,
-          totalRatings: 150,
-          features: ['24x7', 'Parking', 'Food Court']
-        },
-        {
-          _id: '2',
-          name: 'Lingaraj Temple',
-          description: 'Ancient Hindu temple dedicated to Lord Shiva',
-          category: { name: 'Landmarks', color: '#EF4444' },
-          address: { area: 'Old Town', city: 'Bhubaneswar' },
-          rating: 4.8,
-          totalRatings: 500,
-          features: ['Heritage Site', 'Guided Tours']
-        },
-        {
-          _id: '3',
-          name: 'KIIT University',
-          description: 'Deemed university with multiple campuses',
-          category: { name: 'Educational', color: '#10B981' },
-          address: { area: 'Patia', city: 'Bhubaneswar' },
-          rating: 4.5,
-          totalRatings: 300,
-          features: ['Campus', 'Library', 'Hostels']
-        }
-      ]);
-      
-      setStats({ totalStores: 90, totalCategories: 8 });
-      setLoading(false);
-    }, 500);
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        
+        // Load categories and locations from the real API
+        const [categoriesData, locationsData] = await Promise.all([
+          locationsAPI.getCategories(),
+          locationsAPI.getAllLocations({ limit: 6 })
+        ]);
+        
+        setCategories(categoriesData.data || []);
+        setFeaturedLocations(locationsData.data || []);
+        
+        // Calculate stats
+        setStats({
+          totalLocations: 19,
+          totalCategories: 6,
+          totalRoutes: 156
+        });
+        
+      } catch (error) {
+        console.error('Error loading homepage data:', error);
+        toast.error('Failed to load data');
+        
+        // Fallback to demo data
+        setCategories([
+          {
+            id: 'landmarks',
+            name: 'Landmarks & Heritage',
+            description: 'Temples, historical sites, and cultural attractions',
+            icon: '🏛️',
+            color: '#3B82F6',
+            count: 8
+          },
+          {
+            id: 'educational',
+            name: 'Educational',
+            description: 'Universities, colleges, and schools',
+            icon: '🎓',
+            color: '#10B981',
+            count: 4
+          },
+          {
+            id: 'healthcare',
+            name: 'Healthcare',
+            description: 'Hospitals, clinics, and medical centers',
+            icon: '🏥',
+            color: '#EF4444',
+            count: 2
+          },
+          {
+            id: 'transport',
+            name: 'Transport Hubs',
+            description: 'Railway, airport, and bus terminals',
+            icon: '🚌',
+            color: '#F59E0B',
+            count: 3
+          }
+        ]);
+        
+        setFeaturedLocations([
+          {
+            id: 'lm_001',
+            name: 'Lingaraj Temple',
+            address: 'Old Town, Bhubaneswar',
+            category: 'Landmarks',
+            rating: 4.8,
+            image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=300'
+          },
+          {
+            id: 'ed_001', 
+            name: 'IIT Bhubaneswar',
+            address: 'Khordha, Bhubaneswar',
+            category: 'Educational',
+            rating: 4.9,
+            image: 'https://images.unsplash.com/photo-1562774053-701939374585?w=300'
+          },
+          {
+            id: 'th_001',
+            name: 'Biju Patnaik Airport',
+            address: 'Airport Square, Bhubaneswar',
+            category: 'Transport',
+            rating: 4.5,
+            image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=300'
+          }
+        ]);
+        
+        setStats({
+          totalLocations: 19,
+          totalCategories: 6,
+          totalRoutes: 156
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadData();
   }, []);
 
   const renderStars = (rating) => {
@@ -115,36 +145,80 @@ const HomePage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="spinner mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading amazing places...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <MotionWrapper className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+      {/* Hero Section with Animations */}
+      <section ref={heroRef} className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-24 lg:py-32">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <FloatingElement className="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl" />
+          <FloatingElement className="absolute top-40 right-20 w-48 h-48 bg-blue-400/20 rounded-full blur-2xl" />
+          <FloatingElement className="absolute bottom-20 left-1/3 w-40 h-40 bg-indigo-400/15 rounded-full blur-xl" />
+        </div>
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            <motion.div
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ delay: 0.2, duration: 0.8, ease: "back.out(1.7)" }}
+              className="inline-block mb-6"
+            >
+              <FaMapMarkerAlt className="text-6xl text-blue-200" />
+            </motion.div>
+            
+            <motion.h1 
+              className="hero-title text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent"
+              initial={{ y: 100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+            >
               Navigate Bhubaneswar
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-blue-100">
-              Find the shortest path between any two locations in the Temple City
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            </motion.h1>
+            
+            <motion.p 
+              className="hero-subtitle text-xl md:text-2xl mb-4 text-blue-100 max-w-3xl mx-auto"
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+            >
+              Experience intelligent route planning through the Temple City
+            </motion.p>
+            
+            <motion.p 
+              className="hero-description text-lg mb-12 text-blue-200 max-w-2xl mx-auto"
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+            >
+              Discover shortest paths, real-time pricing, and environmental impact across 19+ locations
+            </motion.p>
+            
+            <motion.div 
+              className="hero-buttons flex flex-col sm:flex-row gap-4 justify-center mb-16"
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 1, duration: 0.6 }}
+            >
               <Link
                 to="/search"
-                className="bg-white text-blue-600 hover:bg-gray-100 font-bold py-3 px-8 rounded-lg transition-colors inline-flex items-center justify-center"
+                className="group bg-white text-blue-600 hover:bg-blue-50 font-bold py-4 px-8 rounded-xl transition-all duration-300 inline-flex items-center justify-center shadow-lg hover:shadow-xl transform hover:-translate-y-1"
               >
-                <FaSearch className="mr-2" />
-                Find Route
+                <FaSearch className="mr-3 group-hover:scale-110 transition-transform" />
+                Plan Your Route
+                <FaArrowRight className="ml-3 group-hover:translate-x-1 transition-transform" />
               </Link>
-              <button
+              
+              <motion.button
                 onClick={() => {
                   if (navigator.geolocation) {
                     const loadingToast = toast.loading('Finding your location...');
@@ -161,262 +235,217 @@ const HomePage = () => {
                     );
                   }
                 }}
-                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-600 font-bold py-3 px-8 rounded-lg transition-colors inline-flex items-center justify-center"
+                className="group bg-transparent border-2 border-white/50 text-white hover:bg-white hover:text-blue-600 font-bold py-4 px-8 rounded-xl transition-all duration-300 inline-flex items-center justify-center backdrop-blur-sm hover:scale-105"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <FaMapMarkerAlt className="mr-2" />
+                <FaMapMarkerAlt className="mr-3 group-hover:bounce" />
                 From My Location
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
+            
+            {/* Stats Section */}
+            <motion.div 
+              className="hero-stats grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 1.2, duration: 0.6 }}
+            >
+              <div className="stat-item text-center">
+                <motion.div 
+                  className="text-4xl font-bold text-white mb-2"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 1.4, duration: 0.6, ease: "back.out(1.7)" }}
+                >
+                  {stats.totalLocations}+
+                </motion.div>
+                <div className="text-blue-200">Locations</div>
+              </div>
+              <div className="stat-item text-center">
+                <motion.div 
+                  className="text-4xl font-bold text-white mb-2"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 1.6, duration: 0.6, ease: "back.out(1.7)" }}
+                >
+                  {stats.totalCategories}
+                </motion.div>
+                <div className="text-blue-200">Categories</div>
+              </div>
+              <div className="stat-item text-center">
+                <motion.div 
+                  className="text-4xl font-bold text-white mb-2"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 1.8, duration: 0.6, ease: "back.out(1.7)" }}
+                >
+                  {stats.totalRoutes}+
+                </motion.div>
+                <div className="text-blue-200">Possible Routes</div>
+              </div>
+            </motion.div>
           </div>
         </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-12 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-3xl font-bold text-blue-600 mb-2">
-                {stats.totalStores}+
-              </div>
-              <div className="text-gray-600">Locations</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-blue-600 mb-2">
-                {stats.totalCategories}+
-              </div>
-              <div className="text-gray-600">Categories</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-blue-600 mb-2">⚡</div>
-              <div className="text-gray-600">Smart Routing</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-blue-600 mb-2">🗺️</div>
-              <div className="text-gray-600">Live Maps</div>
-            </div>
-          </div>
+        
+        {/* Floating Elements */}
+        <div className="floating-elements absolute inset-0 pointer-events-none">
+          <motion.div 
+            className="element absolute top-1/4 left-8 w-4 h-4 bg-white/20 rounded-full"
+            animate={{ y: [0, -20, 0], rotate: [0, 180, 360] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div 
+            className="element absolute top-1/3 right-12 w-6 h-6 bg-blue-300/30 rounded-full"
+            animate={{ y: [0, 30, 0], x: [0, -10, 0] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div 
+            className="element absolute bottom-1/4 left-1/4 w-3 h-3 bg-indigo-200/40 rounded-full"
+            animate={{ y: [0, -15, 0], scale: [1, 1.2, 1] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          />
         </div>
       </section>
 
       {/* Categories Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Browse by Location Type
-            </h2>
-            <p className="text-gray-600 text-lg">
-              Find routes to different types of places in Bhubaneswar
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {categories.map((category) => (
-              <Link
-                key={category._id}
-                to={`/category/${category.slug}`}
-                className="card hover:shadow-md transition-shadow text-center group"
+          <StaggeredContainer>
+            <motion.div className="text-center mb-16">
+              <motion.h2 
+                className="text-4xl font-bold text-gray-900 mb-4"
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.6 }}
               >
-                <div 
-                  className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-2xl group-hover:scale-110 transition-transform"
-                  style={{ backgroundColor: `${category.color}20` }}
+                Explore Categories
+              </motion.h2>
+              <motion.p 
+                className="text-xl text-gray-600 max-w-2xl mx-auto"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+              >
+                Discover amazing places across different categories in Bhubaneswar
+              </motion.p>
+            </motion.div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {categories.map((category, index) => (
+                <AnimatedCard
+                  key={category.id}
+                  className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 text-center border border-gray-100"
+                  ref={el => cardRefs.current[index] = el}
+                  onClick={() => window.location.href = `/search?category=${category.id}`}
                 >
-                  <span>{category.icon}</span>
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-2">{category.name}</h3>
-                <p className="text-sm text-gray-600 mb-2">{category.description}</p>
-                <div className="text-sm text-blue-600 font-medium">
-                  {category.storeCount || 0} locations
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          <div className="text-center mt-8">
-            <Link
-              to="/search"
-              className="btn-primary inline-flex items-center"
-            >
-              <FaStore className="mr-2" />
-              View All Categories
-            </Link>
-          </div>
+                  <div className="text-4xl mb-4">{category.icon}</div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{category.name}</h3>
+                  <p className="text-gray-600 mb-4">{category.description}</p>
+                  <div className="text-sm text-blue-600 font-semibold">
+                    {category.count} locations
+                  </div>
+                  <div className="card-shadow absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-2xl opacity-0 -z-10"></div>
+                </AnimatedCard>
+              ))}
+            </div>
+          </StaggeredContainer>
         </div>
       </section>
 
-      {/* Special Journeys Section */}
-      <section className="py-16 bg-blue-50">
+      {/* Featured Locations */}
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Discover Special Journeys
-            </h2>
-            <p className="text-gray-600 text-lg">
-              Experience Bhubaneswar through curated routes designed for specific interests
-            </p>
-          </div>
+          <motion.div className="text-center mb-16">
+            <motion.h2 
+              className="text-4xl font-bold text-gray-900 mb-4"
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6 }}
+            >
+              Featured Locations
+            </motion.h2>
+            <motion.p 
+              className="text-xl text-gray-600 max-w-2xl mx-auto"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            >
+              Popular destinations that define the essence of Bhubaneswar
+            </motion.p>
+          </motion.div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Temple Heritage Trail */}
-            <div className="card hover:shadow-lg transition-all group">
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 bg-orange-100 rounded-full flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                  🕉️
-                </div>
-                <h3 className="font-bold text-gray-900 mb-2">Temple Heritage Trail</h3>
-                <p className="text-gray-600 mb-4">Explore ancient temples in chronological order with optimized routes</p>
-                <div className="flex justify-center items-center text-sm text-orange-600 font-medium mb-4">
-                  <FaMapMarkerAlt className="mr-1" />
-                  8 Sacred Temples
-                </div>
-              </div>
-            </div>
-
-            {/* Student Life Circuit */}
-            <div className="card hover:shadow-lg transition-all group">
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                  🎓
-                </div>
-                <h3 className="font-bold text-gray-900 mb-2">Student Life Circuit</h3>
-                <p className="text-gray-600 mb-4">Budget-friendly routes connecting colleges, libraries, and hangout spots</p>
-                <div className="flex justify-center items-center text-sm text-green-600 font-medium mb-4">
-                  <FaMapMarkerAlt className="mr-1" />
-                  Budget Routes
-                </div>
-              </div>
-            </div>
-
-            {/* Culinary Adventure */}
-            <div className="card hover:shadow-lg transition-all group">
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                  🍛
-                </div>
-                <h3 className="font-bold text-gray-900 mb-2">Culinary Adventure</h3>
-                <p className="text-gray-600 mb-4">Food routes timed perfectly for breakfast, lunch, and dinner</p>
-                <div className="flex justify-center items-center text-sm text-red-600 font-medium mb-4">
-                  <FaMapMarkerAlt className="mr-1" />
-                  Timed Routes
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center mt-8">
-            <Link
-              to="/special-journeys"
-              className="btn-primary inline-flex items-center"
-            >
-              <FaRoute className="mr-2" />
-              Explore All Special Journeys
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Stores Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Popular Destinations
-            </h2>
-            <p className="text-gray-600 text-lg">
-              Most visited places in Bhubaneswar
-            </p>
-          </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredStores.map((store) => (
-              <Link
-                key={store._id}
-                to={`/store/${store._id}`}
-                className="card store-card"
+            {featuredLocations.map((location, index) => (
+              <AnimatedCard
+                key={location.id}
+                className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
               >
-                <div className="flex items-start justify-between mb-3">
-                  <h3 className="font-bold text-lg text-gray-900 leading-tight">
-                    {store.name}
-                  </h3>
-                  <div 
-                    className="category-badge text-white text-xs px-2 py-1"
-                    style={{ backgroundColor: store.category?.color || '#3B82F6' }}
+                <div className="h-48 bg-gradient-to-r from-blue-400 to-indigo-500 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-black/20"></div>
+                  <div className="absolute bottom-4 left-4 text-white">
+                    <div className="text-lg font-bold">{location.name}</div>
+                    <div className="text-sm opacity-90">{location.category}</div>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <div className="flex items-center mb-3">
+                    <div className="flex text-yellow-400 mr-2">
+                      {renderStars(location.rating)}
+                    </div>
+                    <span className="text-gray-600 text-sm">({location.rating})</span>
+                  </div>
+                  <p className="text-gray-600 mb-4">{location.address}</p>
+                  <Link
+                    to={`/search?destination=${location.id}`}
+                    className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center justify-center"
                   >
-                    {store.category?.name}
-                  </div>
+                    <FaRoute className="mr-2" />
+                    Find Route
+                  </Link>
                 </div>
-
-                <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-                  {store.description}
-                </p>
-
-                <div className="flex items-center mb-3">
-                  <div className="flex items-center mr-2">
-                    {renderStars(store.rating)}
-                  </div>
-                  <span className="text-sm text-gray-600">
-                    {store.rating?.toFixed(1)} ({store.totalRatings} reviews)
-                  </span>
-                </div>
-
-                <div className="flex items-center text-sm text-gray-600 mb-3">
-                  <FaMapMarkerAlt className="mr-2 text-gray-400" />
-                  <span className="truncate">{store.address?.area}, {store.address?.city}</span>
-                </div>
-
-                {store.features && store.features.length > 0 && (
-                  <div className="flex flex-wrap gap-1">
-                    {store.features.slice(0, 3).map((feature, index) => (
-                      <span 
-                        key={index}
-                        className="inline-block bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded"
-                      >
-                        {feature}
-                      </span>
-                    ))}
-                    {store.features.length > 3 && (
-                      <span className="inline-block bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">
-                        +{store.features.length - 3} more
-                      </span>
-                    )}
-                  </div>
-                )}
-              </Link>
+              </AnimatedCard>
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="text-center mt-8">
+      {/* Call to Action */}
+      <section className="py-20 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
+        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <motion.h2 
+            className="text-4xl font-bold mb-6"
+            initial={{ y: 30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+          >
+            Ready to Explore?
+          </motion.h2>
+          <motion.p 
+            className="text-xl mb-8 text-blue-100"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
+            Start your journey through Bhubaneswar with our intelligent route planner
+          </motion.p>
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
             <Link
               to="/search"
-              className="btn-primary inline-flex items-center"
+              className="bg-white text-blue-600 hover:bg-blue-50 font-bold py-4 px-8 rounded-xl transition-all duration-300 inline-flex items-center shadow-lg hover:shadow-xl"
             >
-              <FaStore className="mr-2" />
-              View All Stores
+              <FaSearch className="mr-3" />
+              Plan Your Route Now
+              <FaArrowRight className="ml-3" />
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
-
-      {/* CTA Section */}
-      <section className="py-16 bg-blue-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to Navigate Bhubaneswar?
-          </h2>
-          <p className="text-xl mb-8 text-blue-100">
-            Get the shortest route to any destination in the city
-          </p>
-          <Link
-            to="/search"
-            className="bg-white text-blue-600 hover:bg-gray-100 font-bold py-3 px-8 rounded-lg transition-colors inline-flex items-center"
-          >
-            <FaSearch className="mr-2" />
-            Find Your Route
-          </Link>
-        </div>
-      </section>
-    </div>
+    </MotionWrapper>
   );
 };
 

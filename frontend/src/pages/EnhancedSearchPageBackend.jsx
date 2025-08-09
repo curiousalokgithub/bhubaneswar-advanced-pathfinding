@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaMapMarkerAlt, FaRoute, FaExchangeAlt, FaClock, FaWalking, FaCar, FaBus, FaLocationArrow, FaSearch, FaTimes, FaSpinner } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
 import InteractiveMap from '../components/InteractiveMap';
-import pathfindingAPI, { RouteUtils } from '../services/pathfindingAPI';
+import { pathfindingAPI, routesAPI, locationsAPI, systemAPI } from '../services/api';
 
 const EnhancedSearchPage = () => {
   const [fromLocation, setFromLocation] = useState('');
@@ -33,7 +33,7 @@ const EnhancedSearchPage = () => {
 
   const checkAPIStatus = async () => {
     try {
-      const health = await pathfindingAPI.checkHealth();
+      const health = await systemAPI.getHealth();
       setApiStatus(health.status === 'OK' ? 'connected' : 'error');
     } catch (error) {
       setApiStatus('error');
@@ -43,19 +43,35 @@ const EnhancedSearchPage = () => {
 
   const loadLocations = async () => {
     try {
-      const data = await pathfindingAPI.getLocations();
-      setLocations(data.locations || []);
+      const categoriesData = await locationsAPI.getCategories();
+      const locationsData = await locationsAPI.getAllLocations();
       
-      // Extract unique categories
-      const categories = [...new Set(data.locations?.map(loc => loc.category) || [])];
       setLocationCategories([
         { id: 'all', name: 'All Categories', icon: '📍' },
-        ...categories.map(cat => ({ id: cat, name: cat, icon: getCategoryIcon(cat) }))
+        ...categoriesData.categories?.map(cat => ({ 
+          id: cat.id, 
+          name: cat.name, 
+          icon: cat.icon 
+        })) || []
       ]);
+      
+      // Flatten locations from all categories
+      const allLocations = [];
+      if (locationsData.data?.categories) {
+        Object.values(locationsData.data.categories).forEach(category => {
+          category.locations?.forEach(location => {
+            allLocations.push({
+              ...location,
+              categoryName: category.name
+            });
+          });
+        });
+      }
+      setLocations(allLocations);
     } catch (error) {
       console.error('Failed to load locations:', error);
-      toast.error('Failed to load locations from server');
-      // Fallback to empty array
+      toast.error('Failed to load locations');
+      // Fallback to empty arrays
       setLocations([]);
       setLocationCategories([{ id: 'all', name: 'All Categories', icon: '📍' }]);
     }
@@ -203,41 +219,34 @@ const EnhancedSearchPage = () => {
     
     try {
       // Calculate route using backend API
-      const routeData = await pathfindingAPI.calculateRoute({
+      const routeData = await routesAPI.calculateRoute({
         fromCoords,
         toCoords,
         transportMode,
-        routePreference: routeType
+        routePreference: routeType,
+        timeOfDay: 'normal'
       });
 
       // Get pricing for all transport modes
-      const pricingData = await pathfindingAPI.getAllPricing(fromCoords, toCoords);
+      const pricingData = await routesAPI.getAllPricing(fromCoords, toCoords);
       setAllPricing(pricingData);
 
       // Format the route for display
       const formattedRoute = {
-        ...routeData,
-        distance: RouteUtils.formatDistance(routeData.distance),
-        duration: RouteUtils.formatDuration(routeData.travelTime),
-        transportMode: transportMode,
-        estimatedCost: RouteUtils.formatPriceRange(routeData.pricing),
+        ...routeData.route,
+        fromLocation,
+        toLocation,
         fromCoords,
         toCoords,
-        steps: [
-          `Start from ${fromLocation}`,
-          `Travel ${routeData.distance.toFixed(1)} km via ${routeData.algorithm} route`,
-          `Estimated travel time: ${routeData.travelTime} minutes`,
-          `Cost: ${RouteUtils.formatPriceRange(routeData.pricing)}`,
-          `Arrive at ${toLocation}`
-        ]
+        transportMode,
+        allPricing: pricingData.pricing
       };
 
       setRoute(formattedRoute);
-      toast.success(`Route calculated! Distance: ${RouteUtils.formatDistance(routeData.distance)}, Time: ${RouteUtils.formatDuration(routeData.travelTime)}`);
-      
+      toast.success('Route calculated successfully!');
     } catch (error) {
       console.error('Route calculation failed:', error);
-      toast.error(error.message || 'Failed to calculate route. Please try again.');
+      toast.error(`Failed to calculate route: ${error.message}`);
     } finally {
       setIsCalculating(false);
     }

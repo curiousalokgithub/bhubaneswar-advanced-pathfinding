@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: bhubaneswar-pathfinding-api
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: API_VERSION
+        value: 2.0.0
+      - key: FRONTEND_URL
+        value: https://your-frontend-domain.com
+    healthCheckPath: /api/health
+    disk:
+      name: bhubaneswar-pathfinding-disk
+      size: 1GB
+      mountPath: /opt/render/project
+    autoDeploy: true
+    branch: main

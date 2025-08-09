@@ -1,24 +1,31 @@
 # 🗺️ Bhubaneswar Advanced Pathfinding System
 
-> **A comprehensive route planning application for Bhubaneswar with advanced pathfinding algorithms, current location detection, and multi-modal transport integration.**
+A comprehensive full-stack application for real-time route calculation and location services in Bhubaneswar, Odisha. Built with React frontend and Node.js backend, featuring advanced pathfinding algorithms, dynamic pricing, and environmental impact analysis.
 
 ![React](https://img.shields.io/badge/React-18.0+-blue.svg)
-![Vite](https://img.shields.io/badge/Vite-5.0+-green.svg)
+![Node.js](https://img.shields.io/badge/Node.js-18.0+-green.svg)
+![Express](https://img.shields.io/badge/Express-4.18+-lightgrey.svg)
 ![Leaflet](https://img.shields.io/badge/Leaflet-Interactive%20Maps-brightgreen.svg)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-Styling-blueviolet.svg)
 
+## 🚀 Live Demo
+
+- **Frontend**: https://bhubaneswar-advanced-pathfinding.vercel.app
+- **Backend API**: https://bhubaneswar-pathfinding-api.onrender.com
+- **API Documentation**: https://bhubaneswar-pathfinding-api.onrender.com/
+
 ## 🌟 **Project Overview**
 
-This application provides intelligent route planning specifically designed for Bhubaneswar, Odisha. It combines advanced pathfinding algorithms with real-world local knowledge to deliver optimal routing solutions that go beyond standard navigation apps.
+This full-stack application provides intelligent route planning specifically designed for Bhubaneswar, Odisha. It combines advanced pathfinding algorithms with real-world local knowledge, real-time pricing, and environmental impact analysis to deliver comprehensive routing solutions.
 
-### 🎯 **Key Differentiators from Google Maps**
+### 🎯 **Key Features**
 
-- **Local Intelligence**: Specialized for Bhubaneswar with local transport costs and routes
-- **Educational Focus**: Comprehensive university and college routing
-- **Category-Based Search**: Filter destinations by purpose (healthcare, education, shopping, etc.)
-- **Multi-Modal Comparison**: Compare costs and features across all transport modes
-- **Current Location Integration**: One-click geolocation with visual indicators
-- **Cultural Awareness**: Includes temples, heritage sites, and cultural landmarks
+- **Real-time Route Calculation**: Advanced pathfinding with multiple transport modes
+- **Dynamic Pricing**: Real-time cost estimation based on Ola, Uber, Rapido rates  
+- **Location Discovery**: 19+ locations across 6 categories in Bhubaneswar
+- **Interactive Map**: Visual route display with markers and directions
+- **Environmental Impact**: CO2 emissions calculation for different transport modes
+- **Smart Recommendations**: AI-powered transport mode suggestions
 
 ## ✨ **Features**
 

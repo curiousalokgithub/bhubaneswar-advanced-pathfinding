@@ -5,9 +5,16 @@
   "main": "index.js",
   "scripts": {
     "dev": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm start", 
     "build": "cd frontend && npm run build",
-    "install-deps": "cd frontend && npm install",
-    "preview": "cd frontend && npm run preview"
+    "install:frontend": "cd frontend && npm install",
+    "install:backend": "cd backend && npm install", 
+    "install:all": "npm run install:frontend && npm run install:backend",
+    "test:frontend": "cd frontend && npm test",
+    "test:backend": "cd backend && node __tests__/health.test.js",
+    "test": "npm run test:backend",
+    "preview": "cd frontend && npm run preview",
+    "health": "node -e \"console.log('Frontend: http://localhost:3000\\nBackend: http://localhost:5000\\nAPI Health: http://localhost:5000/api/health')\""
   },
   "keywords": [
     "pathfinding",

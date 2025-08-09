@@ -1,13 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FaSearch, FaMapMarkerAlt, FaBars, FaTimes } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useGsapButtonPulse } from './motion/gsapHooks';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
+  
+  // GSAP animation refs
+  const buttonRefs = useRef([]);
+  const headerRef = useRef(null);
+  
+  // Use GSAP hooks for animations
+  useGsapButtonPulse(buttonRefs);
+  
+  useEffect(() => {
+    // Header entrance animation
+    if (headerRef.current) {
+      import('gsap').then(({ gsap }) => {
+        gsap.from(headerRef.current, {
+          y: -100,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power3.out"
+        });
+      });
+    }
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -69,17 +92,34 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
+    <motion.header 
+      ref={headerRef}
+      className="bg-white shadow-md sticky top-0 z-50"
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.8, ease: [0.6, -0.05, 0.01, 0.99] }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo and Brand */}
-          <Link 
-            to="/" 
-            className="flex items-center space-x-2 text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors"
+          <motion.div
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
           >
-            <FaMapMarkerAlt className="text-blue-600" />
-            <span>Bhubaneswar Routes</span>
-          </Link>
+            <Link 
+              to="/" 
+              className="flex items-center space-x-2 text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors"
+            >
+              <motion.div
+                animate={{ rotate: [0, 10, 0] }}
+                transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+              >
+                <FaMapMarkerAlt className="text-blue-600" />
+              </motion.div>
+              <span>Bhubaneswar Routes</span>
+            </Link>
+          </motion.div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
@@ -262,7 +302,7 @@ const Header = () => {
           </div>
         )}
       </div>
-    </header>
+    </motion.header>
   );
 };
 
