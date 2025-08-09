@@ -2,6 +2,7 @@
   "name": "bhubaneswar-pathfinding-backend",
   "version": "2.0.0",
   "description": "Advanced Backend API for Bhubaneswar Pathfinding System with real-time route calculations and dynamic pricing",
+  "type": "module",
   "main": "server_new.js",
   "scripts": {
     "start": "node server_new.js",
