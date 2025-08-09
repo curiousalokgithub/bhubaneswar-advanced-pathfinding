@@ -1,11 +1,9 @@
 {
   "version": 2,
-  "name": "bhubaneswar-pathfinding-frontend",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "framework": "vite",
   "installCommand": "npm install",
-  "devCommand": "npm run dev",
   "env": {
     "VITE_API_URL": "https://bhubaneswar-pathfinding-api.onrender.com/api",
     "VITE_BACKEND_URL": "https://bhubaneswar-pathfinding-api.onrender.com",
@@ -19,10 +17,12 @@
     {
       "source": "/api/(.*)",
       "destination": "https://bhubaneswar-pathfinding-api.onrender.com/api/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
-  "cleanUrls": true,
-  "trailingSlash": false,
   "headers": [
     {
       "source": "/(.*)",
