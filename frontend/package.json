@@ -1,8 +1,8 @@
 {
-  "name": "bhubaneswar-store-locator-frontend",
+  "name": "bhubaneswar-advanced-pathfinding-frontend",
   "private": true,
-  "version": "1.0.0",
-  "description": "Frontend for Bhubaneswar Store Locator - Find local stores, restaurants, and services in Bhubaneswar, Odisha",
+  "version": "2.0.0",
+  "description": "Enhanced Frontend for Bhubaneswar Advanced Pathfinding - Google Maps Integration, Special Journeys, Grid Animations",
   "type": "module",
   "scripts": {
     "dev": "vite",
