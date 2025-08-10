@@ -3,8 +3,8 @@ services:
     name: bhubaneswar-pathfinding-api
     env: node
     plan: free
-    buildCommand: npm install
-    startCommand: npm start
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
     envVars:
       - key: NODE_ENV
         value: production
@@ -13,11 +13,9 @@ services:
       - key: API_VERSION
         value: 2.0.0
       - key: FRONTEND_URL
-        value: https://your-frontend-domain.com
+        value: https://bhubaneswar-advanced-pathfinding.vercel.app
+      - key: ALLOWED_ORIGINS
+        value: https://bhubaneswar-advanced-pathfinding.vercel.app,http://localhost:3000
     healthCheckPath: /api/health
-    disk:
-      name: bhubaneswar-pathfinding-disk
-      size: 1GB
-      mountPath: /opt/render/project
     autoDeploy: true
     branch: main

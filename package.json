@@ -4,11 +4,14 @@
   "description": "A comprehensive route planning application for Bhubaneswar with advanced pathfinding algorithms, current location detection, and multi-modal transport integration.",
   "main": "index.js",
   "scripts": {
-    "dev": "cd frontend && npm run dev",
-    "dev:backend": "cd backend && npm start", 
+    "start": "cd backend && npm start",
+    "dev": "concurrently --names \"FRONTEND,BACKEND\" --prefix-colors \"cyan,yellow\" \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:backend": "cd backend && npm start",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:both": "concurrently --names \"FRONTEND,BACKEND\" --prefix-colors \"cyan,yellow\" \"npm run dev:frontend\" \"npm run dev:backend\"",
     "build": "cd frontend && npm run build",
     "install:frontend": "cd frontend && npm install",
-    "install:backend": "cd backend && npm install", 
+    "install:backend": "cd backend && npm install",
     "install:all": "npm run install:frontend && npm run install:backend",
     "test:frontend": "cd frontend && npm test",
     "test:backend": "cd backend && node __tests__/health.test.js",
@@ -36,5 +39,8 @@
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=9.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0"
   }
 }

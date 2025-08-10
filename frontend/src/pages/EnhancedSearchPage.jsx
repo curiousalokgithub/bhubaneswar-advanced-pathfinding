@@ -19,6 +19,7 @@ const EnhancedSearchPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isDetectingLocation, setIsDetectingLocation] = useState(false);
   const [locations, setLocations] = useState([]);
+  const [locationCategories, setLocationCategories] = useState({});
   const [transportModes, setTransportModes] = useState([]);
   const [apiStatus, setApiStatus] = useState('checking');
   const [allPricing, setAllPricing] = useState(null);
@@ -101,6 +102,9 @@ const EnhancedSearchPage = () => {
         const data = await pathfindingAPI.getLocations();
         let flattenedLocations = [];
         if (data && data.categories) {
+          // Set the categories
+          setLocationCategories(data.categories);
+          
           Object.keys(data.categories).forEach(categoryKey => {
             const category = data.categories[categoryKey];
             if (category && category.locations) {
@@ -133,6 +137,36 @@ const EnhancedSearchPage = () => {
       { id: 5, name: 'Esplanade One Mall', coords: [20.2961, 85.8245], category: 'shopping', type: 'Mall' }
     ];
     setLocations(fallbackLocations);
+
+    // Set up fallback categories
+    const fallbackCategories = {
+      landmarks: {
+        name: 'Landmarks & Heritage',
+        icon: '🏛️',
+        locations: fallbackLocations.filter(loc => loc.category === 'landmarks')
+      },
+      educational: {
+        name: 'Educational',
+        icon: '🎓',
+        locations: fallbackLocations.filter(loc => loc.category === 'educational')
+      },
+      healthcare: {
+        name: 'Healthcare',
+        icon: '🏥',
+        locations: fallbackLocations.filter(loc => loc.category === 'healthcare')
+      },
+      publicTransport: {
+        name: 'Public Transport',
+        icon: '🚌',
+        locations: fallbackLocations.filter(loc => loc.category === 'publicTransport')
+      },
+      shopping: {
+        name: 'Shopping',
+        icon: '🛍️',
+        locations: fallbackLocations.filter(loc => loc.category === 'shopping')
+      }
+    };
+    setLocationCategories(fallbackCategories);
   };
 
   const loadTransportModes = () => {

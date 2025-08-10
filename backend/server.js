@@ -9,6 +9,7 @@ import rateLimit from 'express-rate-limit';
 // Import routes
 import storeRoutes from './routes/storeRoutes.js';
 import categoryRoutes from './routes/categoryRoutes.js';
+import travelPlanRoutes from './routes/travelPlanRoutes.js';
 
 dotenv.config();
 
@@ -69,6 +70,7 @@ app.get('/', (req, res) => {
     endpoints: {
       stores: '/api/stores',
       categories: '/api/categories',
+      travelPlans: '/api/travel-plans',
       health: '/health',
       docs: '/api/docs'
     },
@@ -108,6 +110,13 @@ app.get('/api/docs', (req, res) => {
       categories: {
         'GET /api/categories': 'Get all categories',
         'POST /api/categories': 'Create category (Admin)'
+      },
+      travelPlans: {
+        'GET /api/travel-plans': 'Get all travel plans with filters',
+        'GET /api/travel-plans/:id': 'Get specific travel plan',
+        'POST /api/travel-plans/:id/book': 'Book a travel plan',
+        'GET /api/travel-plans/types/all': 'Get all plan types',
+        'GET /api/travel-plans/stats/overview': 'Get plan statistics'
       }
     },
     sampleRequests: {
@@ -120,6 +129,7 @@ app.get('/api/docs', (req, res) => {
 // API Routes
 app.use('/api/stores', storeRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('/api/travel-plans', travelPlanRoutes);
 
 // 404 handler
 app.use((req, res) => {

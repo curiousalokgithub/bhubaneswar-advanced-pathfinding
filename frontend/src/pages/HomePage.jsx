@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { FaSearch, FaMapMarkerAlt, FaStar, FaRoute, FaUsers, FaArrowRight, FaPlay } from 'react-icons/fa';
+import { FaSearch, FaMapMarkerAlt, FaStar, FaRoute, FaUsers, FaArrowRight, FaPlay, FaRocket, FaHeart } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
+import { gsap } from 'gsap';
+import { TextPlugin } from 'gsap/TextPlugin';
 import { locationsAPI } from '../services/api';
-import { MotionWrapper, AnimatedCard, StaggeredContainer, FloatingElement } from '../components/motion/MotionWrapper';
-import { useGsapHeroTimeline, useGsapCardHover } from '../components/motion/gsapHooks';
+
+// Register GSAP plugins
+gsap.registerPlugin(TextPlugin);
 
 const HomePage = () => {
   const [categories, setCategories] = useState([]);
@@ -170,7 +173,7 @@ const HomePage = () => {
             <motion.div
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
-              transition={{ delay: 0.2, duration: 0.8, ease: "back.out(1.7)" }}
+              transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
               className="inline-block mb-6"
             >
               <FaMapMarkerAlt className="text-6xl text-blue-200" />
@@ -256,7 +259,7 @@ const HomePage = () => {
                   className="text-4xl font-bold text-white mb-2"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ delay: 1.4, duration: 0.6, ease: "back.out(1.7)" }}
+                  transition={{ delay: 1.4, duration: 0.6, ease: "easeOut" }}
                 >
                   {stats.totalLocations}+
                 </motion.div>
@@ -267,7 +270,7 @@ const HomePage = () => {
                   className="text-4xl font-bold text-white mb-2"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ delay: 1.6, duration: 0.6, ease: "back.out(1.7)" }}
+                  transition={{ delay: 1.6, duration: 0.6, ease: "easeOut" }}
                 >
                   {stats.totalCategories}
                 </motion.div>
@@ -278,7 +281,7 @@ const HomePage = () => {
                   className="text-4xl font-bold text-white mb-2"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ delay: 1.8, duration: 0.6, ease: "back.out(1.7)" }}
+                  transition={{ delay: 1.8, duration: 0.6, ease: "easeOut" }}
                 >
                   {stats.totalRoutes}+
                 </motion.div>

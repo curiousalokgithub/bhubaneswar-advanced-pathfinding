@@ -62,7 +62,7 @@ export const useGsapHeroTimeline = (triggerRef, options = {}) => {
         scale: 0,
         opacity: 0,
         duration: 0.6,
-        ease: "back.out(1.7)",
+        ease: "power3.out",
         stagger: stagger
       }, "-=0.2")
       .from(".floating-elements .element", {
@@ -195,7 +195,7 @@ export const useGsapScrollTrigger = (elementRef, animationConfig) => {
               y: 50,
               opacity: 0,
               duration: 0.8,
-              ease: "power3.out",
+              ease: "back.out(1.7)",
               ...animationConfig
             });
           }
@@ -235,7 +235,7 @@ export const useGsapButtonPulse = (buttonRefs) => {
             gsap.to(button, {
               scale: 1,
               duration: 0.2,
-              ease: "back.out(1.7)"
+              ease: "power3.out"
             });
           }
         });

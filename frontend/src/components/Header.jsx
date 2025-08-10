@@ -144,6 +144,16 @@ const Header = () => {
               Route Planner
             </Link>
             <Link
+              to="/advanced-routing"
+              className={`font-medium transition-colors ${
+                isActiveRoute('/advanced-routing') 
+                  ? 'text-blue-600' 
+                  : 'text-gray-700 hover:text-blue-600'
+              }`}
+            >
+              Google Maps
+            </Link>
+            <Link
               to="/enhanced-search"
               className={`font-medium transition-colors ${
                 isActiveRoute('/enhanced-search') 

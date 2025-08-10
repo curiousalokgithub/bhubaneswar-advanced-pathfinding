@@ -1,5 +1,5 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { useReducedMotion } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import React from 'react';
 
 /**
  * Enhanced motion wrapper with accessibility support
@@ -46,7 +46,7 @@ export const cardVariants = {
     scale: 1,
     transition: {
       duration: 0.5,
-      ease: [0.6, -0.05, 0.01, 0.99]
+      ease: "easeOut"
     }
   },
   hover: {
@@ -60,7 +60,8 @@ export const cardVariants = {
   tap: {
     scale: 0.98,
     transition: {
-      duration: 0.1
+      duration: 0.1,
+      ease: "easeOut"
     }
   }
 };
@@ -130,13 +131,14 @@ export const MotionWrapper = ({ children, className = "", ...props }) => {
 /**
  * AnimatedCard component for card animations
  */
-export const AnimatedCard = ({ children, className = "", onClick, ...props }) => {
+export const AnimatedCard = React.forwardRef(({ children, className = "", onClick, ...props }, ref) => {
   const shouldReduceMotion = useReducedMotion();
   
   const variants = shouldReduceMotion ? {} : cardVariants;
   
   return (
     <motion.div
+      ref={ref}
       className={className}
       variants={variants}
       initial="initial"
@@ -149,7 +151,9 @@ export const AnimatedCard = ({ children, className = "", onClick, ...props }) =>
       {children}
     </motion.div>
   );
-};
+});
+
+AnimatedCard.displayName = 'AnimatedCard';
 
 /**
  * SlideInSection for section animations

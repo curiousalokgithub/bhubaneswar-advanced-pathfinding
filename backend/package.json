@@ -2,12 +2,12 @@
   "name": "bhubaneswar-pathfinding-backend",
   "version": "2.0.0",
   "description": "Advanced Backend API for Bhubaneswar Pathfinding System with real-time route calculations and dynamic pricing",
-  "type": "module",
-  "main": "server_new.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node server_new.js",
-    "dev": "nodemon server_new.js",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "old-start": "node server.js",
+    "server-new": "node server_new.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -28,9 +28,10 @@
   "author": "curiousalokgithub",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2",
+    "axios": "^1.11.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
+    "express": "^4.18.2",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
